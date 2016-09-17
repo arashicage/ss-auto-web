@@ -7,6 +7,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"gopkg.in/macaron.v1"
+	"github.com/robfig/cron"
 )
 
 type serverInfo struct {
@@ -24,6 +25,7 @@ const (
 )
 
 func main() {
+
 	m := macaron.Classic()
 
 	//	默认为静态 dir 为 public 目录
@@ -42,13 +44,24 @@ func main() {
 
 	})
 
-	getServerSlice()
+	{
+		//强制运行一次
+		getServerSlice()
+
+		c := cron.New()
+
+		c.AddFunc("0/5 * * * * ?", getServerSlice)
+		//c.AddFunc("@hourly", getServerSlice)
+
+		c.Start()
+	}
 
 	m.Run(8080)
 
 }
 
 func getServerSlice() {
+
 	doc, e := goquery.NewDocument(shadowsocksEntry0)
 	if e != nil {
 		fmt.Println(e)
