@@ -1,0 +1,158 @@
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>ss-auto-web</title>
+
+		<link rel="stylesheet" href="css/style.css">
+
+		<meta name="viewport" content="width=device-width">
+
+
+	</head>
+	<body>
+
+        <div class="features">
+			<ul class="wrap">
+				<li class="browser">
+					<b>跨浏览器</b>
+					<p>Unslider已经在所有最新的浏览器上测试过了，并且对那些老旧的浏览器也能很出色的降级处理。</p>
+				</li>
+
+				<li class="keyboard">
+					<b>支持键盘导航</b>
+					<p>如果需要，可以加入键盘方向键导航。试一试左右方向键吧！</p>
+				</li>
+
+				<!-- <li class="height">
+					<b>自动调整高度</b>
+					<p>并不是每个幻灯片都很规范，Unslider能够自动调整高度。</p>
+				</li> -->
+
+				<!-- <li class="responsive">
+					<b>Yep，他还支持响应式布局</b>
+					<p>如今哪个网站还不支持响应式布局就已经非常OUT了。Unslider帮你轻松搞定！</p>
+				</li> -->
+
+				<li class="responsive">
+					<div id="qrcodeCanvas1"></div>
+				</li>
+			</ul>
+		</div>
+
+		<div class="banner">
+
+			<ul>
+				{{range .servers}}
+					<li style="background-image: url('img/wood.jpg');">
+						<div class="inner">
+
+								<div class="col-lg-4 text-center">
+									<div class="qrtext" style="display:none;">{{.Qrstring}}</div>
+									<div class="qrimg"></div>
+    	                            <h4>A服务器地址:{{.Server}}</h4>
+    	                            <h4>端口:{{.Port}}</h4>
+    	                            <h4>A密码:{{.Password}}</h4>
+    	                            <h4>加密方式:{{.Method}}</h4>
+    	                            <h4>状态:<font color="green">正常</font></h4>
+    	                            <h4><font color="red">注意：每6小时更换一次密码</font></h4>
+    	                        </div>
+
+						</div>
+					</li>
+				{{end}}
+			</ul>
+		</div>
+
+		<div id="download" class="wrap footer" style="padding-top: 20px;padding-bottom: 20px;">
+			<a href="//github.com/arashicage/ss-auto-web">arashicage@github.com</a>
+		</div>
+
+		<script src="js/jquery-3.1.0.min.js"></script>
+
+		<!-- <script src="js/jquery.event.move.js"></script> -->
+		<script src="js/jquery.event.swipe.js"></script>
+
+		<script src="js/unslider.min.js"></script>
+
+		<script type="text/javascript" src="js/jquery.qrcode.js"></script>
+		<script type="text/javascript" src="js/qrcode.js"></script>
+
+
+		<!-- 新 Bootstrap 核心 CSS 文件 -->
+		<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+
+		<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+		<!-- <link rel="stylesheet" href="css/bootstrap-theme.min.css"> -->
+
+		<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+		<!-- <script src="js/jquery-3.1.0.min.js"></script> -->
+
+		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+		<!-- <script src="js/bootstrap.min.js"></script> -->
+
+		<script>
+			$(".qrtext").each(function(){
+				console.log($(this).text())
+				text = "ss://" + $(this).text()
+				$(this).parent().find(".qrimg").qrcode({
+					width: 150,
+					height: 150,
+					text	: text
+				});
+			});
+
+			if(window.chrome) {
+				$('.banner li').css('background-size', '100% 100%');
+                $('.arrows').css('display','none');
+			}
+
+			$('.banner').unslider({
+				arrows: true,
+				fluid: true,
+				dots: true,
+
+                // speed: 500               //  The speed to animate each slide (in milliseconds)
+            	// delay: 3000,              //  The delay between slide animations (in milliseconds)
+            	// complete: function() { console.log("hello"); },  //  A function that gets called after every slide animation
+            	// keys: true,               //  Enable keyboard (left, right) arrow shortcuts
+            	// dots: true,               //  Display dot navigation
+            	// fluid: false              //  Support responsive design. May break non-responsive designs
+
+			});
+
+			jQuery('#qrcodeCanvas').qrcode({
+				width: 120,
+				height: 120,
+				text	: "http://jetienne.com"
+			});
+
+			//  Find any element starting with a # in the URL
+			//  And listen to any click events it fires
+			$('a[href^="#"]').click(function() {
+				//  Find the target element
+				var target = $($(this).attr('href'));
+
+				//  And get its position
+				var pos = target.offset(); // fallback to scrolling to top || {left: 0, top: 0};
+
+				//  jQuery will return false if there's no element
+				//  and your code will throw errors if it tries to do .offset().left;
+				if(pos) {
+					//  Scroll the page
+					$('html, body').animate({
+						scrollTop: pos.top,
+						scrollLeft: pos.left
+					}, 1000);
+				}
+
+				//  Don't let them visit the url, we'll scroll you there
+				return false;
+			});
+
+
+		</script>
+
+	</body>
+</html>
