@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-	"gopkg.in/macaron.v1"
 	"github.com/robfig/cron"
+	"gopkg.in/macaron.v1"
 )
 
 type serverInfo struct {
@@ -51,7 +51,7 @@ func main() {
 		c := cron.New()
 
 		c.AddFunc("0/5 * * * * ?", getServerSlice)
-		//c.AddFunc("@hourly", getServerSlice)
+		// c.AddFunc("@hourly", getServerSlice)
 
 		c.Start()
 	}
@@ -61,6 +61,8 @@ func main() {
 }
 
 func getServerSlice() {
+
+	servers = nil
 
 	doc, e := goquery.NewDocument(shadowsocksEntry0)
 	if e != nil {
