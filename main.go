@@ -50,8 +50,8 @@ func main() {
 
 		c := cron.New()
 
-		c.AddFunc("0/5 * * * * ?", getServerSlice)
-		// c.AddFunc("@hourly", getServerSlice)
+		// c.AddFunc("0/5 * * * * ?", getServerSlice)
+		c.AddFunc("@hourly", getServerSlice)
 
 		c.Start()
 	}
