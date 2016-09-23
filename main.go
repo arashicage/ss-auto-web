@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	_ "github.com/icattlecoder/godaemon"
 	"github.com/robfig/cron"
 	"gopkg.in/macaron.v1"
 )
@@ -51,7 +52,8 @@ func main() {
 		c := cron.New()
 
 		// c.AddFunc("0/5 * * * * ?", getServerSlice)
-		c.AddFunc("@hourly", getServerSlice)
+		c.AddFunc("0 10 * * * ?", getServerSlice)
+		// c.AddFunc("@hourly", getServerSlice)
 
 		c.Start()
 	}
@@ -80,7 +82,6 @@ func getServerSlice() {
 		// 如果密码为空, 不加入到 servers slice 中
 
 		// ss: //method:password@hostname:port
-		// x :=
 		if sectionInfo[2] != "" {
 			si := serverInfo{
 				Server:   strings.ToUpper(sectionInfo[0]),
