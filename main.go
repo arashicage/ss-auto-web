@@ -70,7 +70,7 @@ func getServerSlice() {
 	if e != nil {
 		fmt.Println(e)
 	}
-	c := doc.Find("#free").Find("div.col-lg-4.text-center")
+	c := doc.Find("#free").Find("div.col-sm-4.text-center")
 	c.Each(func(i int, content *goquery.Selection) {
 		sectionInfo := []string{}
 		// serverInfo := serverDetail{}
